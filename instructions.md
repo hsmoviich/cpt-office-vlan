@@ -8,12 +8,12 @@ Design and configure a small office network using **Cisco Packet Tracer**. This 
 
 ## 🖥️ VLAN Structure and Host Requirements
 
-| VLAN Name       | Description             | Number of Hosts | Devices Included                     |
+| VLAN Name       | Description             | Number of Hosts | Devices Included                      |
 |-----------------|-------------------------|------------------|--------------------------------------|
-| Admin VLAN      | Admin department        | 10               | 10 PCs                               |
-| HR VLAN         | Human Resources         | 15               | 15 PCs                               |
-| IT VLAN         | IT department           | 25               | 25 PCs                               |
-| Guest VLAN      | Visitors/Guests         | 20               | 20 PCs (with internet-only access)   |
+| Admin VLAN      | Admin department        | 25               | 4 PCs                                |
+| HR VLAN         | Human Resources         | 15               | 3 PCs                               |
+| IT VLAN         | IT department           | 25               | 4 PCs                               |
+| Guest VLAN      | Visitors/Guests         | 10               | 2 PCs (with internet-only access)   |
 | Servers VLAN    | Internal servers        | 5                | DHCP Server, DNS Server, 3 other servers |
 | Router & L3 SW  | Core infrastructure     | 2                | 1 Router, 1 Layer 3 Switch           |
 
@@ -56,6 +56,7 @@ You must perform **VLSM subnetting** on the base network: `192.168.0.0/24` to ac
 1. **Design the IP Addressing Scheme**  
    - Subnet the `192.168.0.0/24` using VLSM
    - Assign IPs to each VLAN based on host needs
+   - Use host addresses in accending order
 
 2. **Topology Creation in Packet Tracer**
    - Add and label all required devices
