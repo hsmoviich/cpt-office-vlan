@@ -189,8 +189,8 @@ next ip address is going to be 192.168.0.132/30 255.255.255.252
 |DHCP Server|192.168.0.113/29|255.255.255.248|192.168.0.118/29|
 |DNS Server|192.168.0.114/29|255.255.255.248|192.168.0.118/29|
 |**WAN - 1**|**192.168.0.120/30**|**255.255.255.252**|
-|  R1 	|192.168.0.120/30|255.255.255.252|
-|  R2 	|192.168.0.120/30|255.255.255.252|
+|  R1 	|192.168.0.121/30|255.255.255.252|
+|  R2 	|192.168.0.122/30|255.255.255.252|
 |**WAN - 2**|**192.168.0.124/30**|**255.255.255.252**|
 |  R1 	|192.168.0.125/30|255.255.255.252|
 |  R3 	|192.168.0.126/30|255.255.255.252|
@@ -203,6 +203,122 @@ next ip address is going to be 192.168.0.132/30 255.255.255.252
 | R2 G0/0/0 IT Vlan|192.168.0.62/27|255.255.255.224|   	|
 | R2 G0/0/1 Guest Vlan|192.168.0.110/28|255.255.255.240|   	|
 | R3 G0/0/0 Admin Vlan|192.168.0.30/27|255.255.255.224|   	|
+
+---
+
+## R1 Configuration – Cisco Packet Tracer
+
+### Initial Setup
+```bash
+enable
+configure terminal
+hostname R1
+```
+
+### Interface Configuration
+
+#### GigabitEthernet0/0/0 – Servers VLAN
+```bash
+interface g0/0/0
+ip address 192.168.0.118 255.255.255.248
+description Connecting to Servers VLAN
+no shutdown
+```
+
+#### GigabitEthernet0/0/1 – HR VLAN
+```bash
+interface g0/0/1
+ip address 192.168.0.94 255.255.255.224
+description Connecting to HR VLAN
+no shutdown
+```
+
+### Serial Interfaces – WAN Links
+
+#### Serial0/1/0 – Connected to R2 (WAN 1)
+```bash
+interface s0/1/0
+description Connected to R2 via WAN 1
+ip address 192.168.0.121 255.255.255.252
+clock rate 64000
+no shutdown
+```
+
+#### Serial0/1/1 – Connected to R3 (WAN 2)
+```bash
+interface s0/1/1
+description Connected to R3 via WAN 2
+ip address 192.168.0.125 255.255.255.252
+no shutdown
+```
+
+### Save Configuration
+```bash
+copy running-config startup-config
+```
+## R2 Configuration 
+
+```bash
+enable
+configure terminal
+hostname R2
+
+interface g0/0/0
+description Connecting to IT VLAN
+ip address 192.168.9.11 255.255.255.240
+no shutdown
+exit
+
+interface g0/0/1
+description Connecting to Guest VLAN
+ip address 192.168.0.110 255.255.255.240
+no shutdown
+exit
+
+interface s0/1/0
+description Connected to R1 via WAN 1
+ip address 192.168.0.122 255.255.255.252
+no shutdown 
+exit
+
+interface s0/1/1
+description Connected to R3 via WAN3
+ip address 192.168.0.130 255.255.255.252
+no shutdown 
+exit
+
+copy running-config startup-config
+```
+
+## R3 Configuration 
+
+```bash
+enable
+configure terminal
+hostname R3
+
+interface g0/0/0
+description Connecting to Admin VLAN
+ip address 192.168.0.30 255.255.255.224
+no shutdown
+exit
+
+interface s0/1/0
+description Connected to R1 via WAN 2
+ip address 192.168.0.126 255.255.255.252
+clock rate 64000
+no shutdown
+exit
+
+interface s0/1/1
+description Connected to R2 via WAN 3
+ip address 192.168.0.129 255.255.255.252
+no shutdown
+exit
+
+copy running-config startup-config
+```
+
 
 ## Issues & Solutions
 
